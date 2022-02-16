@@ -20,12 +20,11 @@ long pci_dev_syscall(struct pci_device_info *ptr)
 int main()
 {
 	struct pci_device_info result = { 0 };
-	struct pci_device_info *ptr = &result;
 
-	pci_dev_syscall(ptr);
+	pci_dev_syscall(&result);
 
-	printf("vendor_id: %hu\n", ptr->vendor_id);
-	printf("device_id: %d\n", ptr->device_id);
+	printf("vendor_id: %hu\n", result.vendor_id);
+	printf("device_id: %d\n", result.device_id);
 
 	return 0;
 }
