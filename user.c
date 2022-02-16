@@ -7,15 +7,30 @@
 
 #define __NR_pci_dev 440
 
-long pci_dev_syscall(void)
+struct pci_device_info {
+	unsigned short vendor_id;
+	unsigned short device_id;
+};
+
+long pci_dev_syscall(struct pci_device_info *ptr)
 {
-        return syscall(__NR_pci_dev);
+	return syscall(__NR_pci_dev, ptr);
 }
 
 int main()
 {
-        int ans = 0;
-        ans = pci_dev_syscall();
+	struct pci_device_info devices[100];
+	struct pci_device_info *ptr = devices;
 
-        return 0;
+	pci_dev_syscall(ptr);
+
+	for (ptr = devices; ptr < devices + 100; ++ptr) {
+		if (ptr->vendor_id != 0 && ptr->device_id != 0) {
+			printf("vendor_id: %hu\n", ptr->vendor_id);
+			printf("device_id: %d\n", ptr->device_id);
+			puts("-------------------");
+		}
+	}
+
+	return 0;
 }
