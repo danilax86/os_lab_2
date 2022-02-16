@@ -11,22 +11,16 @@ struct pci_device_info {
 SYSCALL_DEFINE1(pci_dev, struct pci_device_info *, info)
 {
 	struct pci_dev *dev = NULL;
-	struct pci_device_info devices[100]; // или ошибка здесь
-	int index = 0;
+	struct pci_device_info dev_info;
 
-	while ((dev = pci_get_device(PCI_ANY_ID, PCI_ANY_ID, dev))) {
-		printk(KERN_INFO "----------------------\n");
-		devices[index].device_id = dev->device;
-		devices[index].vendor_id = dev->vendor;
-		printk(KERN_INFO "pci vendor id [%d]\n",
-		       devices[index].vendor_id);
-		printk(KERN_INFO "pci device id [%d]\n",
-		       devices[index].device_id);
-		++index;
-	}
+	dev = pci_get_device(PCI_ANY_ID, PCI_ANY_ID, dev);
+	dev_info.device_id = dev->device;
+	dev_info.vendor_id = dev->vendor;
 
-	copy_to_user(info, &devices,
-		     sizeof(struct pci_device_info)); // или ошибка здесь
+	printk(KERN_INFO "pci vendor id [%d]\n", dev_info.vendor_id);
+	printk(KERN_INFO "pci device id [%d]\n", dev_info.device_id);
+
+	copy_to_user(info, &dev_info, sizeof(struct pci_device_info));
 
 	return 0;
 }
