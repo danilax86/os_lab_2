@@ -19,12 +19,12 @@ long pci_dev_syscall(struct pci_device_info *ptr)
 
 int main()
 {
-	struct pci_device_info devices[100];
+	struct pci_device_info devices[100]; // или ошибка здесь
 	struct pci_device_info *ptr = devices;
 
 	pci_dev_syscall(ptr);
 
-	for (ptr = devices; ptr < devices + 100; ++ptr) {
+	for (ptr = devices; ptr < devices + 100; ++ptr) { // или ошибка здесь
 		if (ptr->vendor_id != 0 && ptr->device_id != 0) {
 			printf("vendor_id: %hu\n", ptr->vendor_id);
 			printf("device_id: %d\n", ptr->device_id);

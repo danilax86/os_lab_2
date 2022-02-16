@@ -11,7 +11,7 @@ struct pci_device_info {
 SYSCALL_DEFINE1(pci_dev, struct pci_device_info *, info)
 {
 	struct pci_dev *dev = NULL;
-	struct pci_device_info devices[100];
+	struct pci_device_info devices[100]; // или ошибка здесь
 	int index = 0;
 
 	while ((dev = pci_get_device(PCI_ANY_ID, PCI_ANY_ID, dev))) {
@@ -25,7 +25,8 @@ SYSCALL_DEFINE1(pci_dev, struct pci_device_info *, info)
 		++index;
 	}
 
-	copy_to_user(info, &devices, sizeof(struct pci_device_info));
+	copy_to_user(info, &devices,
+		     sizeof(struct pci_device_info)); // или ошибка здесь
 
 	return 0;
 }
