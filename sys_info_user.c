@@ -8,16 +8,13 @@
 
 #define __NR_syscall_info 441
 
-long syscall_info_syscall(int pid_id pid)
+long syscall_info_syscall(int pid_input)
 {
-	return syscall(__NR_pci_dev, pid);
+	return syscall(__NR_syscall_info, pid_input);
 }
 
 int main(int argc, char **argv)
 {
-	int pid_id = (int) strtol(argv[1], NULL, 10)
-
 	syscall_info_syscall(argv[1]);
-
 	return 0;
 }
