@@ -1424,5 +1424,6 @@ long compat_ksys_semtimedop(int semid, struct sembuf __user *tsems,
 
 struct pci_device_info;
 asmlinkage long sys_pci_dev(struct pci_device_info *);
+asmlinkage long sys_syscall_info(void);
 
 #endif
