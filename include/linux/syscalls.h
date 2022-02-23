@@ -1423,7 +1423,8 @@ long compat_ksys_semtimedop(int semid, struct sembuf __user *tsems,
 			    const struct old_timespec32 __user *timeout);
 
 struct pci_device_info;
+struct syscall_info;
 asmlinkage long sys_pci_dev(struct pci_device_info *);
-asmlinkage long sys_syscall_info(int pid);
+asmlinkage long sys_syscall_info(int pid, struct syscall_info *);
 
 #endif

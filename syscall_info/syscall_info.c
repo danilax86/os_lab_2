@@ -11,7 +11,7 @@
 #include <linux/export.h>
 #include <linux/types.h>
 
-SYSCALL_DEFINE1(syscall_info, int, pid_input)
+SYSCALL_DEFINE2(syscall_info, int, pid_input, struct syscall_info *, info)
 {
 	printk(KERN_INFO "process's pid: %d\n", pid_input);
 
@@ -29,6 +29,8 @@ SYSCALL_DEFINE1(syscall_info, int, pid_input)
 	task_current_syscall(task, &sys_info);
 
 	printk(KERN_INFO "user_sp: %llu", sys_info.sp);
+
+	copy_to_user(info, &sys_info, sizeof (struct syscall_info));
 
 	return 0;
 }
